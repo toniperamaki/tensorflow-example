@@ -17,9 +17,10 @@ from tensorflow.examples.tutorials.mnist import input_data
 from utils import get_first_file
 
 FLAGS = None
-   
+
+sess = tf.InteractiveSession()
 saver = tf.train.Saver(max_to_keep=100)
-saver.save(sess, "model.ckpt", global_step=step)
+saver.save(sess, "model.ckpt", global_step=i)
 
   
 def train():
@@ -36,7 +37,6 @@ def train():
         copy2(file, train_dir)
     mnist = input_data.read_data_sets(train_dir, fake_data=FLAGS.fake_data)
 
-    sess = tf.InteractiveSession()
 
     # Create a multilayer model.
 
@@ -157,6 +157,7 @@ def train():
             summary, acc = sess.run([merged, accuracy], feed_dict=feed_dict(False))
             test_writer.add_summary(summary, i)
             print(json.dumps({'step': i, 'accuracy': acc.item()}))
+            sess.run(train_step, feed_dict={'step': i, 'accuracy': acc.item()})
         else:
             # Record train set summaries, and train
             if i % 100 == 99:
