@@ -18,25 +18,6 @@ from utils import get_first_file
 
 FLAGS = None
    
-      
-# classifier = learn.Estimator(model_fn=fully_connected_model,
-# model_dir='./valohai/outputs/model_dir',
-# config=learn.RunConfig(save_checkpoints_secs=10)
-
-# validation_monitor = learn.monitors.ValidationMonitor(
-# x=valid_set[0],
-# y=valid_set[1],
-# metrics={‘accuracy’: MetricSpec(tfmetrics.streaming_accuracy)},
-# every_n_steps=10)
-
-#classifier.fit(x=train_set[0],
-#y=train_set[1],
-#batch_size=100,
-#steps=2500,
-# monitors=[validation_monitor])
-
-
-
 
 def train():
     # Import input data
@@ -91,19 +72,7 @@ def train():
     all_weights = []
     all_biases = []
 
- # Save the checkpoint in the /output folder
-    filepath = '/valohai/outputs/model_dir'
 
-   # Checkpoint Strategy configuration
-    run_config = tf.contrib.learn.RunConfig(
-      model_dir=filepath,
-      keep_checkpoint_max=10)
-   
-   # Create the Estimator
-    mnist_classifier = tf.estimator.Estimator(
-      model_fn=variable_summaries, config=run_config)
-            
-      
     def nn_layer(input_tensor, input_dim, output_dim, layer_name, act=tf.nn.relu):
         """Reusable code for making a simple neural net layer.
 
