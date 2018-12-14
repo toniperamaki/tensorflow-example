@@ -2,7 +2,7 @@
 
 - step:
     name: Batch feature extraction
-    image: tensorflow/tensorflow:1.5.0-devel-gpu
+    image: tensorflow/tensorflow:1.8.0-devel-gpu-py3
     command: python batch_feature_extraction.py
     inputs:
       - name: training-set-images
@@ -16,7 +16,7 @@
 
 - step:
     name: Train model
-    image: tensorflow/tensorflow:1.5.0-devel-gpu
+    image: tensorflow/tensorflow:1.8.0-devel-gpu-py3
     command: python train.py {parameters}
     parameters:
       - name: max_steps
@@ -46,7 +46,7 @@
 
 - step:
     name: Worker environment check
-    image: tensorflow/tensorflow:1.5.0-devel-gpu
+    image: tensorflow/tensorflow:1.8.0-devel-gpu-py3
     command:
       - pwd
       - ls -la
