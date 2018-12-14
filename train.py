@@ -17,8 +17,18 @@ from tensorflow.examples.tutorials.mnist import input_data
 from utils import get_first_file
 
 FLAGS = None
+    # Tensorboard checkpoint settings 
+os.makedirs('/valohai/outputs/model_dir', exist_ok=True)
 
-print('hello world')
+saver = tf.train.Saver()
+
+
+
+my_checkpointing_config = tf.estimator.RunConfig(
+    save_checkpoints_secs = 20*60,  # Save checkpoints every 20 minutes.
+    keep_checkpoint_max = 10,       # Retain the 10 most recent checkpoints.
+)
+
 
 def train():
     # Import input data
@@ -209,3 +219,10 @@ if __name__ == '__main__':
                         help='Summaries log directory')
     FLAGS, unparsed = parser.parse_known_args()
     tf.app.run(main=main, argv=[sys.argv[0]] + unparsed)
+    
+    
+    # Later, launch the model, initialize the variables, do some work, and save the
+# variables to disk.
+with tf.Session() as sess:
+    save_path = saver.save(sess, "/valohai/outputs/model_dir")
+    print("Model saved in path: %s" % save_path)
