@@ -158,6 +158,8 @@ def train():
             test_writer.add_summary(summary, i)
             print(json.dumps({'step': i, 'accuracy': acc.item()}))
             sess.run(train_step, feed_dict={'step': i, 'accuracy': acc.item()})
+            saver.save(sess, "model.ckpt", global_step=step)
+
         else:
             # Record train set summaries, and train
             if i % 100 == 99:
