@@ -18,6 +18,7 @@ from utils import get_first_file
 
 FLAGS = None
 
+print('hello world')
 
 def train():
     # Import input data
