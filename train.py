@@ -195,10 +195,11 @@ def train():
     print(json.dumps({'step': FLAGS.max_steps, 'accuracy': acc.item()}))
 
     # Later, launch the model, initialize the variables, do some work, and save the
-    # variables to disk.
-    with tf.Session() as sess:
-        save_path = saver.save(sess, "/valohai/outputs/model_dir")
-        print("Model saved in path: %s" % save_path)
+    # variables to dis
+   saver = tf.train.Saver()
+   with tf.Session() as sess:
+      save_path = saver.save(sess, "/valohai/outputs/model_dir")
+      print("Model saved in path: %s" % save_path)
 
                              
     train_writer.close()
