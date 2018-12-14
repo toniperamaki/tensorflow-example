@@ -20,21 +20,21 @@ FLAGS = None
    
     # Tensorboard checkpoint settings 
 
-classifier = learn.Estimator(model_fn=fully_connected_model,
-model_dir=”./valohai/outputs/model_dir”,
-config=learn.RunConfig(save_checkpoints_secs=10)
+# classifier = learn.Estimator(model_fn=fully_connected_model,
+# model_dir='./valohai/outputs/model_dir',
+# config=learn.RunConfig(save_checkpoints_secs=10)
 
-validation_monitor = learn.monitors.ValidationMonitor(
-x=valid_set[0],
-y=valid_set[1],
-metrics={‘accuracy’: MetricSpec(tfmetrics.streaming_accuracy)},
-every_n_steps=10)
+# validation_monitor = learn.monitors.ValidationMonitor(
+# x=valid_set[0],
+# y=valid_set[1],
+# metrics={‘accuracy’: MetricSpec(tfmetrics.streaming_accuracy)},
+# every_n_steps=10)
 
-classifier.fit(x=train_set[0],
-y=train_set[1],
-batch_size=100,
-steps=2500,
-monitors=[validation_monitor])
+#classifier.fit(x=train_set[0],
+#y=train_set[1],
+#batch_size=100,
+#steps=2500,
+# monitors=[validation_monitor])
 
 
 
