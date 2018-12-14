@@ -20,10 +20,10 @@ FLAGS = None
    
  
    # Save the checkpoint in the /output folder
-    filepath = '/valohai/outputs/model_dir'
+filepath = '/valohai/outputs/model_dir'
 
    # Checkpoint Strategy configuration
-    run_config = tf.contrib.learn.RunConfig(
+run_config = tf.contrib.learn.RunConfig(
     model_dir=filepath,
     keep_checkpoint_max=10)
    
