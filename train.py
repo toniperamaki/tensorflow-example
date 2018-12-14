@@ -28,7 +28,7 @@ run_config = tf.contrib.learn.RunConfig(
     keep_checkpoint_max=10)
    
    # Create the Estimator
-   mnist_classifier = tf.estimator.Estimator(
+mnist_classifier = tf.estimator.Estimator(
       model_fn=cnn_model_fn, config=run_config)
       
       
