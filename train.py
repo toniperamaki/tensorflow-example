@@ -17,17 +17,26 @@ from tensorflow.examples.tutorials.mnist import input_data
 from utils import get_first_file
 
 FLAGS = None
+   
     # Tensorboard checkpoint settings 
-os.makedirs('/valohai/outputs/model_dir', exist_ok=True)
 
-saver = tf.train.Saver()
+classifier = learn.Estimator(model_fn=fully_connected_model,
+model_dir=”./valohai/outputs/model_dir”,
+config=learn.RunConfig(save_checkpoints_secs=10)
+
+validation_monitor = learn.monitors.ValidationMonitor(
+x=valid_set[0],
+y=valid_set[1],
+metrics={‘accuracy’: MetricSpec(tfmetrics.streaming_accuracy)},
+every_n_steps=10)
+
+classifier.fit(x=train_set[0],
+y=train_set[1],
+batch_size=100,
+steps=2500,
+monitors=[validation_monitor])
 
 
-
-my_checkpointing_config = tf.estimator.RunConfig(
-    save_checkpoints_secs = 20*60,  # Save checkpoints every 20 minutes.
-    keep_checkpoint_max = 10,       # Retain the 10 most recent checkpoints.
-)
 
 
 def train():
@@ -185,6 +194,13 @@ def train():
     _, acc = sess.run([merged, accuracy], feed_dict=feed_dict(False))
     print(json.dumps({'step': FLAGS.max_steps, 'accuracy': acc.item()}))
 
+    # Later, launch the model, initialize the variables, do some work, and save the
+    # variables to disk.
+    with tf.Session() as sess:
+        save_path = saver.save(sess, "/valohai/outputs/model_dir")
+        print("Model saved in path: %s" % save_path)
+
+                             
     train_writer.close()
     test_writer.close()
 
@@ -221,8 +237,3 @@ if __name__ == '__main__':
     tf.app.run(main=main, argv=[sys.argv[0]] + unparsed)
     
     
-    # Later, launch the model, initialize the variables, do some work, and save the
-# variables to disk.
-with tf.Session() as sess:
-    save_path = saver.save(sess, "/valohai/outputs/model_dir")
-    print("Model saved in path: %s" % save_path)
