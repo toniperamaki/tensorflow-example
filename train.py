@@ -20,7 +20,7 @@ FLAGS = None
 
 sess = tf.InteractiveSession()
 saver = tf.train.Saver(max_to_keep=100)
-saver.save(sess, "model.ckpt", global_step=i)
+saver.save(sess, "model.ckpt", global_step=step)
 
   
 def train():
