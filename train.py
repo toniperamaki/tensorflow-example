@@ -18,8 +18,20 @@ from utils import get_first_file
 
 FLAGS = None
    
-    # Tensorboard checkpoint settings 
+ 
+   # Save the checkpoint in the /output folder
+   filepath = "/valohai/outputs/model_dir"
 
+   # Checkpoint Strategy configuration
+   run_config = tf.contrib.learn.RunConfig(
+      model_dir=filepath,
+      keep_checkpoint_max=10)
+   
+   # Create the Estimator
+   mnist_classifier = tf.estimator.Estimator(
+      model_fn=cnn_model_fn, config=run_config)
+      
+      
 # classifier = learn.Estimator(model_fn=fully_connected_model,
 # model_dir='./valohai/outputs/model_dir',
 # config=learn.RunConfig(save_checkpoints_secs=10)
@@ -193,14 +205,6 @@ def train():
 
     _, acc = sess.run([merged, accuracy], feed_dict=feed_dict(False))
     print(json.dumps({'step': FLAGS.max_steps, 'accuracy': acc.item()}))
-
-    # Later, launch the model, initialize the variables, do some work, and save the
-    # variables to dis
-   saver = tf.train.Saver()
-   with tf.Session() as sess:
-      save_path = saver.save(sess, "/valohai/outputs/model_dir")
-      print("Model saved in path: %s" % save_path)
-
                              
     train_writer.close()
     test_writer.close()
