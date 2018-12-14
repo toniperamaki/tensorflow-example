@@ -18,8 +18,8 @@ from utils import get_first_file
 
 FLAGS = None
    
-saver = tf.train.Saver(max_to_keep=100)
-saver.save(sess, "/valohai/outputs/model.ckpt", global_step=i)
+# saver = tf.train.Saver(max_to_keep=100)
+# saver.save(sess, "/valohai/outputs/model.ckpt", global_step=i)
 
   
 def train():
