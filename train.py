@@ -29,7 +29,7 @@ run_config = tf.contrib.learn.RunConfig(
    
    # Create the Estimator
 mnist_classifier = tf.estimator.Estimator(
-      model_fn=cnn_model_fn, config=run_config)
+      model_fn=train, config=run_config)
       
       
 # classifier = learn.Estimator(model_fn=fully_connected_model,
