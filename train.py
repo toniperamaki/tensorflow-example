@@ -152,7 +152,7 @@ def train():
         return {x: xs, y_: ys, keep_prob: k}
 
     with tf.Session() as sess:  
-    for i in range(FLAGS.max_steps):
+        for i in range(FLAGS.max_steps):
         sess.run([optimizer])
     
       
