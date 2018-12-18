@@ -18,10 +18,6 @@ from utils import get_first_file
 
 FLAGS = None
 
-sess = tf.InteractiveSession()
-saver = tf.train.Saver(max_to_keep=100)
-saver.save(sess, "model.ckpt", global_step=step)
-
   
 def train():
     # Import input data
@@ -40,6 +36,11 @@ def train():
 
     # Create a multilayer model.
 
+    saver = tf.train.Saver()
+    
+   
+      
+                        
     # Input placeholders
     with tf.name_scope('input'):
         x = tf.placeholder(tf.float32, [None, 784], name='x-input')
@@ -150,14 +151,20 @@ def train():
             k = 1.0
         return {x: xs, y_: ys, keep_prob: k}
 
+    saver = tf.Session() as sess:  
     for i in range(FLAGS.max_steps):
-
+        sess.run([optimizer])
+    
+      
         if i % 10 == 0:
             # Record summaries and test-set accuracy
             summary, acc = sess.run([merged, accuracy], feed_dict=feed_dict(False))
             test_writer.add_summary(summary, i)
             print(json.dumps({'step': i, 'accuracy': acc.item()}))
             sess.run(train_step, feed_dict={'step': i, 'accuracy': acc.item()})
+            saver.save(sess, 'valohai/outputs/checkpoints/checkidi',
+                       global_step=model.global_step)
+            
             
         else:
             # Record train set summaries, and train
