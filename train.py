@@ -151,7 +151,7 @@ def train():
             k = 1.0
         return {x: xs, y_: ys, keep_prob: k}
 
-    saver = tf.Session() as sess:  
+    with tf.Session() as sess:  
     for i in range(FLAGS.max_steps):
         sess.run([optimizer])
     
