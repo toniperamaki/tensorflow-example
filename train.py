@@ -18,7 +18,9 @@ from utils import get_first_file
 
 FLAGS = None
 
-  
+saver = tf.train.Saver()
+
+
 def train():
     # Import input data
     INPUTS_DIR = os.getenv('VH_INPUTS_DIR', '/tmp/tensorflow/mnist/inputs')
@@ -34,13 +36,9 @@ def train():
     mnist = input_data.read_data_sets(train_dir, fake_data=FLAGS.fake_data)
 
     sess = tf.InteractiveSession()
+
     # Create a multilayer model.
 
-    
-    
-   
-      
-                        
     # Input placeholders
     with tf.name_scope('input'):
         x = tf.placeholder(tf.float32, [None, 784], name='x-input')
@@ -76,10 +74,8 @@ def train():
     all_weights = []
     all_biases = []
 
-
     def nn_layer(input_tensor, input_dim, output_dim, layer_name, act=tf.nn.relu):
         """Reusable code for making a simple neural net layer.
-
         It does a matrix multiply, bias add, and then uses relu to nonlinearize.
         It also sets up name scoping so that the resultant graph is easy to read,
         and adds a number of summary ops.
@@ -152,27 +148,13 @@ def train():
         return {x: xs, y_: ys, keep_prob: k}
 
     for i in range(FLAGS.max_steps):
-          
+
         if i % 10 == 0:
             # Record summaries and test-set accuracy
-            
-            self.global_step = tf.Variable(0, dtype=tf.int32, trainable=False, name='global_step')
-            
-            
-            self.optimizer = tf.train.GradientDescentOptimizer(self.lr).minimize(self.loss,
- global_step=self.global_step)
-          
-            saver = tf.train.Saver()
-            with tf.Session() as sess:
-            
-                summary, acc = sess.run([merged, accuracy], feed_dict=feed_dict(False))
-                test_writer.add_summary(summary, i)
-                print(json.dumps({'step': i, 'accuracy': acc.item()}))
-                sess.run(train_step, feed_dict={'step': i, 'accuracy': acc.item()})
-                saver.save(sess, 'valohai/outputs/checkpoints/checkidi',
-                        global_step=model.global_step)
-            
-            
+            summary, acc = sess.run([merged, accuracy], feed_dict=feed_dict(False))
+            test_writer.add_summary(summary, i)
+            print(json.dumps({'step': i, 'accuracy': acc.item()}))
+            saver.save(sess, '/valohai/outputs/mymodel')
         else:
             # Record train set summaries, and train
             if i % 100 == 99:
@@ -190,12 +172,10 @@ def train():
                 # Record a summary
                 summary, _ = sess.run([merged, train_step], feed_dict=feed_dict(True))
                 train_writer.add_summary(summary, i)
-                saver.save(sess, "model.ckpt", global_step=step)
-
 
     _, acc = sess.run([merged, accuracy], feed_dict=feed_dict(False))
     print(json.dumps({'step': FLAGS.max_steps, 'accuracy': acc.item()}))
-                             
+
     train_writer.close()
     test_writer.close()
 
@@ -230,5 +210,3 @@ if __name__ == '__main__':
                         help='Summaries log directory')
     FLAGS, unparsed = parser.parse_known_args()
     tf.app.run(main=main, argv=[sys.argv[0]] + unparsed)
-    
-    
