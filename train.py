@@ -33,7 +33,7 @@ def train():
         copy2(file, train_dir)
     mnist = input_data.read_data_sets(train_dir, fake_data=FLAGS.fake_data)
 
-
+    sess = tf.InteractiveSession()
     # Create a multilayer model.
 
     
