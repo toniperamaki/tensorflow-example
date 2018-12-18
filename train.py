@@ -165,12 +165,12 @@ def train():
             saver = tf.train.Saver()
             with tf.Session() as sess:
             
-            summary, acc = sess.run([merged, accuracy], feed_dict=feed_dict(False))
-            test_writer.add_summary(summary, i)
-            print(json.dumps({'step': i, 'accuracy': acc.item()}))
-            sess.run(train_step, feed_dict={'step': i, 'accuracy': acc.item()})
-            saver.save(sess, 'valohai/outputs/checkpoints/checkidi',
-                       global_step=model.global_step)
+                summary, acc = sess.run([merged, accuracy], feed_dict=feed_dict(False))
+                test_writer.add_summary(summary, i)
+                print(json.dumps({'step': i, 'accuracy': acc.item()}))
+                sess.run(train_step, feed_dict={'step': i, 'accuracy': acc.item()})
+                saver.save(sess, 'valohai/outputs/checkpoints/checkidi',
+                        global_step=model.global_step)
             
             
         else:
