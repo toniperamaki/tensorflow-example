@@ -153,7 +153,7 @@ def train():
 
     with tf.Session() as sess:  
         for i in range(FLAGS.max_steps):
-        sess.run([optimizer])
+            sess.run([optimizer])
     
       
         if i % 10 == 0:
