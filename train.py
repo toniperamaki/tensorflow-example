@@ -151,10 +151,9 @@ def train():
             k = 1.0
         return {x: xs, y_: ys, keep_prob: k}
 
-    
-        for i in range(FLAGS.max_steps):
+    for i in range(FLAGS.max_steps):
           
-            if i % 10 == 0:
+        if i % 10 == 0:
             # Record summaries and test-set accuracy
             
             self.global_step = tf.Variable(0, dtype=tf.int32, trainable=False, name='global_step')
