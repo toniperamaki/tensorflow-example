@@ -18,8 +18,6 @@ from utils import get_first_file
 
 FLAGS = None
 
-saver = tf.train.Saver()
-
 
 def train():
     # Import input data
@@ -151,6 +149,7 @@ def train():
 
         if i % 10 == 0:
             # Record summaries and test-set accuracy
+            saver = tf.train.Saver()
             summary, acc = sess.run([merged, accuracy], feed_dict=feed_dict(False))
             test_writer.add_summary(summary, i)
             print(json.dumps({'step': i, 'accuracy': acc.item()}))
