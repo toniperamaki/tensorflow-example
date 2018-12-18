@@ -149,11 +149,9 @@ def train():
 
         if i % 10 == 0:
             # Record summaries and test-set accuracy
-            saver = tf.train.Saver()
             summary, acc = sess.run([merged, accuracy], feed_dict=feed_dict(False))
             test_writer.add_summary(summary, i)
             print(json.dumps({'step': i, 'accuracy': acc.item()}))
-            saver.save(sess, '/valohai/outputs/mymodel')
         else:
             # Record train set summaries, and train
             if i % 100 == 99:
@@ -179,6 +177,7 @@ def train():
     test_writer.close()
     
     file_writer = tf.summary.FileWriter('/valohai/outputs', sess.graph)
+    file_writer = tf.summary.FileWriter('/valoahi/outputs', sess.scalar)
 
     # Saving weights and biases as outputs of the task.
     outputs_dir = os.getenv('VH_OUTPUTS_DIR', '/tmp/tensorflow/mnist/outputs')
