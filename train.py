@@ -36,7 +36,7 @@ def train():
 
     # Create a multilayer model.
 
-    saver = tf.train.Saver()
+    
     
    
       
@@ -151,13 +151,21 @@ def train():
             k = 1.0
         return {x: xs, y_: ys, keep_prob: k}
 
-    with tf.Session() as sess:  
-        for i in range(FLAGS.max_steps):
-            sess.run([optimizer])
     
-      
+        for i in range(FLAGS.max_steps):
+          
         if i % 10 == 0:
             # Record summaries and test-set accuracy
+            
+            self.global_step = tf.Variable(0, dtype=tf.int32, trainable=False, name='global_step')
+            
+            
+            self.optimizer = tf.train.GradientDescentOptimizer(self.lr).minimize(self.loss,
+ global_step=self.global_step)
+          
+            saver = tf.train.Saver()
+            with tf.Session() as sess:
+            
             summary, acc = sess.run([merged, accuracy], feed_dict=feed_dict(False))
             test_writer.add_summary(summary, i)
             print(json.dumps({'step': i, 'accuracy': acc.item()}))
