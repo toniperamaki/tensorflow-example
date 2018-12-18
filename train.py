@@ -177,6 +177,8 @@ def train():
 
     train_writer.close()
     test_writer.close()
+    
+    file_writer = tf.summary.FileWriter('/valohai/outputs', sess.graph)
 
     # Saving weights and biases as outputs of the task.
     outputs_dir = os.getenv('VH_OUTPUTS_DIR', '/tmp/tensorflow/mnist/outputs')
